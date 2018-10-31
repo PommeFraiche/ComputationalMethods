@@ -1,22 +1,22 @@
 #include "Scheme.h"
 #include <cmath>
 
-double PI = 4*atan(1);
+double PI = 4 * atan(1);
 
-Scheme::Scheme() : deltaX(5), deltaT(0.1), u(250), maxX(400), maxT(0.5){
+Scheme::Scheme() : dx(5), dt(0.1), u(250), xmax(400), tmax(0.5) {
 
 }
 
-Scheme::Scheme(double dX, double dT, double v, double maX, double maT){
-	deltaX=dX;
-	deltaT=dT;
-	u=v;
-	maxX=maX;
-	maxT=maT;
+Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax) {
+	dx = dx;
+	dt = dt;
+	u = u;
+	xmax = xmax;
+	tmax = tmax;
 }
 
 
-double Scheme::ErrorNorme1(vector<double> analitical, vector<double> approx) {
+double Scheme::ErrorNorm1(vector<double> analitical, vector<double> approx) {
 	int size = analitical.size();
 	double error = 0;
 	for (int i = 0; i < size; i++) error += abs(analitical[i] - approx[i]);
@@ -24,16 +24,16 @@ double Scheme::ErrorNorme1(vector<double> analitical, vector<double> approx) {
 };
 
 
-double Scheme::ErrorNorme2(vector<double> analitical, vector<double> approx) {
+double Scheme::ErrorNorm2(vector<double> analitical, vector<double> approx) {
 	int size = analitical.size();
 	double error = 0;
 	for (int i = 0; i < size; i++) error += (analitical[i] - approx[i])*(analitical[i] - approx[i]);
-	error = sqrt(error );
+	error = sqrt(error);
 	return error;
 };
 
 
-double Scheme::ErrorNormeInf(vector<double> analitical, vector<double> approx) {
+double Scheme::ErrorNormInf(vector<double> analitical, vector<double> approx) {
 	int size = analitical.size();
 	double error = 0;
 	for (int i = 0; i < size; i++) {
@@ -43,23 +43,23 @@ double Scheme::ErrorNormeInf(vector<double> analitical, vector<double> approx) {
 };
 
 
-Matrix Scheme::init() {
-	int width = (maxX / deltaX)+1;
-	int length = (maxT / deltaT)+1;
-	Matrix initial(length , width);
-	
+Matrix Scheme::boundary() {
+	int width = (xmax / dx) + 1;
+	int length = (tmax / dt) + 1;
+	Matrix initial(length, width);
+
 	//boundary
-	for (int i = 1; i <length; i++) {
+	for (int i = 1; i < length; i++) {
 		initial[i][0] = 0;
-		initial[i][width-1] = 0;
+		initial[i][width - 1] = 0;
 	}
 
 	//initial condition 
-	for (int i = 1; i < width-1; i++) { 
-		double x = (i * deltaX); 
+	for (int i = 1; i < width - 1; i++) {
+		double x = (i * dx);
 		if (x <= 50)initial[0][i] = 0;
-		else if (50 < x <= 110)initial[0][i] = 100 * sin(PI*((x-50)/60));
-		else if (110 < x <= maxX)initial[0][i] = 0;
+		else if (50 < x <= 110)initial[0][i] = 100 * sin(PI*((x - 50) / 60));
+		else if (110 < x <= xmax)initial[0][i] = 0;
 	}
 
 	return initial;

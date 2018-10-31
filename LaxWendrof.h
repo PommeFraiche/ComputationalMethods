@@ -2,8 +2,8 @@
 
 class LaxWendrof :public Scheme {
 public:
-	LaxWendrof(double deltaX, double deltaT, double u, int maxX, int maxT);
-	Matrix solveLax(Matrix solve);
+	LaxWendrof(double dx, double dt, double u, int xmax, int tmax);
+	Matrix solve(Matrix solve);
 
 private:
 

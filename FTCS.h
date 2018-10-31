@@ -2,9 +2,6 @@
 
 class FTCS :public Scheme {
 public:
-	FTCS(double deltaX, double deltaT, double u, int maxX, int maxT);
-	Matrix solveFTCS(Matrix solve);
-
-private:
-
+	FTCS(double dx, double dt, double u, int xmax, int tmax);
+	Matrix solve(Matrix solve);
 };
