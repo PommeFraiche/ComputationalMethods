@@ -16,50 +16,66 @@ Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax) {
 }
 
 
-double Scheme::ErrorNorm1(vector<double> analitical, vector<double> approx) {
-	int size = analitical.size();
+double Scheme::ErrorNorm1(Matrix analitical, Matrix approx) {
+	int n = analitical.getNrows(), m = analitical.getNcols();
 	double error = 0;
-	for (int i = 0; i < size; i++) error += abs(analitical[i] - approx[i]);
-	return error;
-};
-
-
-double Scheme::ErrorNorm2(vector<double> analitical, vector<double> approx) {
-	int size = analitical.size();
-	double error = 0;
-	for (int i = 0; i < size; i++) error += (analitical[i] - approx[i])*(analitical[i] - approx[i]);
-	error = sqrt(error);
-	return error;
-};
-
-
-double Scheme::ErrorNormInf(vector<double> analitical, vector<double> approx) {
-	int size = analitical.size();
-	double error = 0;
-	for (int i = 0; i < size; i++) {
-		if (abs(analitical[i] - approx[i]) > error)error = abs(analitical[i] - approx[i]);
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			error += abs(analitical[i][j] - approx[i][j]);
+		}
 	}
+
+	return error;
+};
+
+
+double Scheme::ErrorNorm2(Matrix analitical, Matrix approx) {
+	int n = analitical.getNrows(), m = analitical.getNcols();
+	double error = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			error += (analitical[i][j] - approx[i][j])*(analitical[i][j] - approx[i][j]);
+		}
+	} 
+	error = sqrt(error);
+
+	return error;
+};
+
+
+double Scheme::ErrorNormInf(Matrix analitical, Matrix approx) {
+	int n = analitical.getNrows(), m = analitical.getNcols();
+	double error = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (abs(analitical[i][j] - approx[i][j]) > error) {
+				error = abs(analitical[i][j] - approx[i][j]);
+			}
+		}
+	}
+
 	return error;
 };
 
 
 Matrix Scheme::boundary() {
-	int width = (xmax / dx) + 1;
-	int length = (tmax / dt) + 1;
+	int width = (xmax / dx);
+	int length = (tmax / dt);
 	Matrix initial(length, width);
 
 	//boundary
-	for (int i = 1; i < length; i++) {
+	for (int i = 0; i < length; i++) {
 		initial[i][0] = 0;
 		initial[i][width - 1] = 0;
 	}
 
 	//initial condition 
+	double x = dx;
 	for (int i = 1; i < width - 1; i++) {
-		double x = (i * dx);
 		if (x <= 50)initial[0][i] = 0;
 		else if (50 < x <= 110)initial[0][i] = 100 * sin(PI*((x - 50) / 60));
 		else if (110 < x <= xmax)initial[0][i] = 0;
+		x += dx;
 	}
 
 	return initial;
