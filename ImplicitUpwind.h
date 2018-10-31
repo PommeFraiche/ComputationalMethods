@@ -2,7 +2,7 @@
 
 class ImplicitUpwind :public Scheme {
 public:
-	ImplicitUpwind(double dx, double dt, double u, int xmax, int tmax);
+	ImplicitUpwind(double deltaX, double deltaT, double u, double maxX, double maxT);
 	Matrix solveUpwind(Matrix solve);
 
 private:
