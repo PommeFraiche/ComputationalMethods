@@ -59,8 +59,7 @@ double Scheme::ErrorNormInf(Matrix analitical, Matrix approx) {
 
 
 Matrix Scheme::boundary() {
-	int width = (xmax / dx);
-	int length = (tmax / dt);
+	int width = (xmax / dx), length = (tmax / dt);
 	Matrix initial(length, width);
 
 	//boundary
@@ -79,4 +78,23 @@ Matrix Scheme::boundary() {
 	}
 
 	return initial;
+};
+
+Matrix Scheme::analitical() {
+	int n = (tmax / dt), m = (xmax / dx);
+	Matrix analitical(n, m);
+	analitical = boundary();
+	double t = 0;
+	for (int i = 1; i < n; i++) {
+		t = i * dt;
+		double x = 0;
+		for (int j = 1; j < m - 1; j++) { /*###*/
+			x = i * dx;
+			if (0 <= x <= 50 + 250 * t)analitical[i][j] = 0;
+			else if (50 + 250 * t < x <= 110 + 250 * t)analitical[i][j] = 100 * sin(PI*(x - 50 - 250 * t) / 60);
+			else if (110 + 250 / t < x <= xmax)analitical[i][j] = 0;
+		}
+	}
+	
+	return analitical;
 };

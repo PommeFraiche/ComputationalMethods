@@ -11,6 +11,7 @@ public:
 	double ErrorNorm2(Matrix analitical, Matrix approx);
 	double ErrorNormInf(Matrix analitical, Matrix approx);
 	Matrix boundary();
+	Matrix analitical();
 
 
 protected:
