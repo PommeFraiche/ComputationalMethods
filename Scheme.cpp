@@ -3,16 +3,18 @@
 
 double PI = 4 * atan(1);
 
-Scheme::Scheme() : dx(5), dt(0.1), u(250), xmax(400), tmax(0.5) {
+Scheme::Scheme() : dx(5), dt(0.1), u(250), xmax(400), tmax(0.5), n(5), m(80) {
 
 }
 
-Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax) {
+Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax, int n, int m) {
 	dx = dx;
 	dt = dt;
 	u = u;
 	xmax = xmax;
 	tmax = tmax;
+	n = n;
+	m = m;
 }
 
 
@@ -36,7 +38,7 @@ double Scheme::ErrorNorm2(Matrix analitical, Matrix approx) {
 		for (int j = 0; j < m; j++) {
 			error += (analitical[i][j] - approx[i][j])*(analitical[i][j] - approx[i][j]);
 		}
-	} 
+	}
 	error = sqrt(error);
 
 	return error;
@@ -95,6 +97,6 @@ Matrix Scheme::analitical() {
 			else if (110 + 250 / t < x <= xmax)analitical[i][j] = 0;
 		}
 	}
-	
+
 	return analitical;
 };

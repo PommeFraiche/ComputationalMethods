@@ -2,6 +2,7 @@
 #include <vector>
 #include "matrix.h"
 #include "ExplicitUpwind.h"
+#include "ImplicitUpwind.h"
 
 using namespace std;
 
@@ -13,24 +14,24 @@ int n = tmax / dt, m = xmax / dx;
 Matrix boundary(n, m), solution(n, m), analitical(n, m);
 
 int main() {
-	ExplicitUpwind Explicit(dx, dt, u, xmax, tmax);
-	boundary = Explicit.boundary();
-	solution = Explicit.solve(boundary);
-	analitical = Explicit.analitical();
+	ImplicitUpwind Implicit(dx, dt, u, xmax, tmax, n, m);
+	boundary = Implicit.boundary();
+	solution = Implicit.solve(boundary);
+	analitical = Implicit.analitical();
 
 	printSolution(solution);
 
 	//Errors
-	cout << Explicit.ErrorNorm1(analitical, solution)<<"/n";
-	cout << Explicit.ErrorNorm2(analitical, solution) << "/n";
-	cout << Explicit.ErrorNormInf(analitical, solution) << "/n";
+	cout << Implicit.ErrorNorm1(analitical, solution) << endl;
+	cout << Implicit.ErrorNorm2(analitical, solution) << endl;
+	cout << Implicit.ErrorNormInf(analitical, solution) << endl;
 
-
+	cin >> dt;
 	return 0;
 }
 
 void printSolution(Matrix solution) {
-	std::cout << "t'\'x ";
+	cout << "t'\'x ";
 	for (double x = 0; x < xmax; x += dx) {
 		cout << x << "	";
 	}
