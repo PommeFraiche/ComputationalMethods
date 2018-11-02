@@ -1,7 +1,7 @@
 #include "FTCS.h"
 
-FTCS::FTCS(double dx, double dt, double u, double xmax, double tmax, int n ,int m) {
-	Scheme(dx, dt, u, xmax, tmax, n,m);
+FTCS::FTCS(double dx, double dt, double u, double xmax, double tmax) {
+	Scheme(dx, dt, u, xmax, tmax);
 }
 
 Matrix FTCS::solve(Matrix solve) {
@@ -9,6 +9,7 @@ Matrix FTCS::solve(Matrix solve) {
 	std::vector<double> B(m), X(m);
 
 	double a = u * dt / dx, mm;
+	int n = tmax / dt, m = xmax / dx;
 
 	// The problem can be represent the equation of matrix A*X=B
 	//declaration of the matrix A values
