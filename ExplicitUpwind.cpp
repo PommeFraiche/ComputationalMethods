@@ -8,7 +8,7 @@ Matrix ExplicitUpwind::solve(Matrix solution) {
 	int m = (xmax / dx), n = (tmax / dt);
 	double a = u * dt / dx;
 	for (int i = 1; i < n; i++) {
-		for (int j = 1; j < m - 2; j++) {
+		for (int j = 1; j < m - 1; j++) {
 			solution[i][j] = solution[i - 1][j] * (1 - a) + solution[i - 1][j - 1] * a;
 		}
 	}
