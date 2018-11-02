@@ -3,45 +3,70 @@
 #include "matrix.h"
 #include "ExplicitUpwind.h"
 #include "ImplicitUpwind.h"
+#include "FTCS.h"
+#include "LaxWendroff.h"
 
 using namespace std;
 
-void printSolution(Matrix solution);
-
 //Problem
 double dx = 5, dt = 0.1, xmax = 400, tmax = 0.5, u = 250;
-int n = tmax / dt, m = xmax / dx;
-Matrix boundary(n, m), solution(n, m), analitical(n, m);
+Matrix boundary, solution, analitical;
 
 int main() {
-	ImplicitUpwind Implicit(dx, dt, u, xmax, tmax, n, m);
-	boundary = Implicit.boundary();
-	solution = Implicit.solve(boundary);
-	analitical = Implicit.analitical();
+	/*
+	ExplicitUpwind ExpUp(dx, dt, u, xmax, tmax);
+	boundary = ExpUp.boundary();
+	solution = ExpUp.solve(boundary);
+	analitical = ExpUp.analitical();
 
-	printSolution(solution);
+	ExpUp.printSolution(solution);
 
 	//Errors
-	cout << Implicit.ErrorNorm1(analitical, solution) << endl;
-	cout << Implicit.ErrorNorm2(analitical, solution) << endl;
-	cout << Implicit.ErrorNormInf(analitical, solution) << endl;
+	cout << "Err1: "<< ExpUp.ErrorNorm1(analitical, solution)<<endl;
+	cout << "Err2: " << ExpUp.ErrorNorm2(analitical, solution) << endl;
+	cout << "ErrInf: " << ExpUp.ErrorNormInf(analitical, solution) << endl;
+	*/
 
+	/*
+	ImplicitUpwind ImpUp(dx, dt, u, xmax, tmax);
+	boundary = ImpUp.boundary();
+	solution = ImpUp.solve(boundary);
+	analitical = ImpUp.analitical();
+
+	ImpUp.printSolution(solution);
+
+	//Errors
+	cout << "Err1: " << ImpUp.ErrorNorm1(analitical, solution) << endl;
+	cout << "Err2: " << ImpUp.ErrorNorm2(analitical, solution) << endl;
+	cout << "ErrInf: " << ImpUp.ErrorNormInf(analitical, solution) << endl;
+	*/
+
+	/*
+	FTCS ftcs(dx, dt, u, xmax, tmax);
+	boundary = ftcs.boundary();
+	solution = ftcs.solve(boundary);
+	analitical = ftcs.analitical();
+
+	ftcs.printSolution(solution);
+
+	//Errors
+	cout << "Err1: " << ftcs.ErrorNorm1(analitical, solution) << endl;
+	cout << "Err2: " << ftcs.ErrorNorm2(analitical, solution) << endl;
+	cout << "ErrInf: " << ftcs.ErrorNormInf(analitical, solution) << endl;
+	*/
+
+	LaxWendroff Lax(dx, dt, u, xmax, tmax);
+	boundary = Lax.boundary();
+	solution = Lax.solve(boundary);
+	analitical = Lax.analitical();
+
+	Lax.printSolution(solution);
+
+	//Errors
+	cout << "Err1: " << Lax.ErrorNorm1(analitical, solution) << endl;
+	cout << "Err2: " << Lax.ErrorNorm2(analitical, solution) << endl;
+	cout << "ErrInf: " << Lax.ErrorNormInf(analitical, solution) << endl;
 	cin >> dt;
-	return 0;
-}
 
-void printSolution(Matrix solution) {
-	cout << "t'\'x ";
-	for (double x = 0; x < xmax; x += dx) {
-		cout << x << "	";
-	}
-	double t = 0;
-	for (int i = 0; i < n; i++) {
-		cout << t << "	";
-		for (int j = 0; j < m; j++) {
-			cout << solution[i][j] << "	";
-		}
-		cout << endl;
-		t += dt;
-	}
+	return 0;
 }

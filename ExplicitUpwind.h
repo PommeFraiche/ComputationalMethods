@@ -3,7 +3,7 @@
 
 class ExplicitUpwind :public Scheme {
 public:
-	ExplicitUpwind(double dx, double dt, double u, double xmax, double tmax, int n, int m);
+	ExplicitUpwind(double dx, double dt, double u, double xmax, double tmax);
 	Matrix solve(Matrix solution);
 
 };

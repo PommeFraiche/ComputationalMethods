@@ -1,6 +1,8 @@
 #include "Scheme.h"
 #include <cmath>
 
+using namespace std;
+
 double PI = 4 * atan(1);
 
 Scheme::Scheme() : dx(5), dt(0.1), u(250), xmax(400), tmax(0.5) {
@@ -15,12 +17,11 @@ Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax) {
 	tmax = tmax;
 }
 
-
 double Scheme::ErrorNorm1(Matrix analitical, Matrix approx) {
-	int n = analitical.getNrows(), m = analitical.getNcols();
+	int k = analitical.getNrows(), l = analitical.getNcols();
 	double error = 0;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
+	for (int i = 0; i < k; i++) {
+		for (int j = 0; j < l; j++) {
 			error += abs(analitical[i][j] - approx[i][j]);
 		}
 	}
@@ -28,12 +29,11 @@ double Scheme::ErrorNorm1(Matrix analitical, Matrix approx) {
 	return error;
 };
 
-
 double Scheme::ErrorNorm2(Matrix analitical, Matrix approx) {
-	int n = analitical.getNrows(), m = analitical.getNcols();
+	int k = analitical.getNrows(), l = analitical.getNcols();
 	double error = 0;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
+	for (int i = 0; i < k; i++) {
+		for (int j = 0; j < l; j++) {
 			error += (analitical[i][j] - approx[i][j])*(analitical[i][j] - approx[i][j]);
 		}
 	} 
@@ -42,12 +42,11 @@ double Scheme::ErrorNorm2(Matrix analitical, Matrix approx) {
 	return error;
 };
 
-
 double Scheme::ErrorNormInf(Matrix analitical, Matrix approx) {
-	int n = analitical.getNrows(), m = analitical.getNcols();
+	int k = analitical.getNrows(), l = analitical.getNcols();
 	double error = 0;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
+	for (int i = 0; i < k; i++) {
+		for (int j = 0; j < l; j++) {
 			if (abs(analitical[i][j] - approx[i][j]) > error) {
 				error = abs(analitical[i][j] - approx[i][j]);
 			}
@@ -57,9 +56,7 @@ double Scheme::ErrorNormInf(Matrix analitical, Matrix approx) {
 	return error;
 };
 
-
 Matrix Scheme::boundary() {
-	int m = (xmax / dx), n = (tmax / dt);
 	Matrix initial(n, m);
 
 	//boundary
@@ -69,22 +66,21 @@ Matrix Scheme::boundary() {
 	}
 
 	//initial condition 
-	double x = dx;
+	double x;
 	for (int i = 1; i < m - 1; i++) {
+		x = i * dx;
 		if (x <= 50)initial[0][i] = 0;
 		else if (50 < x <= 110)initial[0][i] = 100 * sin(PI*((x - 50) / 60));
 		else if (110 < x <= xmax)initial[0][i] = 0;
-		x += dx;
 	}
 
 	return initial;
 };
 
 Matrix Scheme::analitical() {
-	int n = (tmax / dt), m = (xmax / dx);
 	Matrix analitical(n, m);
 	analitical = boundary();
-	double t = 0;
+	double t;
 	for (int i = 1; i < n; i++) {
 		t = i * dt;
 		double x = 0;
@@ -98,3 +94,19 @@ Matrix Scheme::analitical() {
 	
 	return analitical;
 };
+
+void Scheme::printSolution(Matrix solution) {
+	cout << "t'\'x ";
+	for (double x = 0; x < xmax; x += dx) {
+		cout << x << "	";
+	}
+	double t = 0;
+	for (int i = 0; i < n; i++) {
+		cout << t << "	";
+		for (int j = 0; j < m; j++) {
+			cout << solution[i][j] << "	";
+		}
+		cout << endl;
+		t += dt;
+	}
+}

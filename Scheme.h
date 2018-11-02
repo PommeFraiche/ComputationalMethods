@@ -13,6 +13,7 @@ class Scheme{
 		double ErrorNormInf(Matrix analitical, Matrix approx);
 		Matrix boundary();
 		Matrix analitical();
+		void printSolution(Matrix solution);
 
 	protected:
 		double dx;
@@ -21,6 +22,8 @@ class Scheme{
 		double xmax;
 		double tmax;
 		double C = u * dt / dx;
+		int n = tmax / dt;
+		int m = xmax / dx;
 };
 
 #endif
