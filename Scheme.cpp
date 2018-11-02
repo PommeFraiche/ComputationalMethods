@@ -3,18 +3,16 @@
 
 double PI = 4 * atan(1);
 
-Scheme::Scheme() : dx(5), dt(0.1), u(250), xmax(400), tmax(0.5), n(5), m(80) {
+Scheme::Scheme() : dx(5), dt(0.1), u(250), xmax(400), tmax(0.5) {
 
 }
 
-Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax, int n, int m) {
+Scheme::Scheme(double dx, double dt, double u, double xmax, double tmax) {
 	dx = dx;
 	dt = dt;
 	u = u;
 	xmax = xmax;
 	tmax = tmax;
-	n = n;
-	m = m;
 }
 
 
@@ -38,7 +36,7 @@ double Scheme::ErrorNorm2(Matrix analitical, Matrix approx) {
 		for (int j = 0; j < m; j++) {
 			error += (analitical[i][j] - approx[i][j])*(analitical[i][j] - approx[i][j]);
 		}
-	}
+	} 
 	error = sqrt(error);
 
 	return error;
@@ -61,18 +59,18 @@ double Scheme::ErrorNormInf(Matrix analitical, Matrix approx) {
 
 
 Matrix Scheme::boundary() {
-	int width = (xmax / dx), length = (tmax / dt);
-	Matrix initial(length, width);
+	int m = (xmax / dx), n = (tmax / dt);
+	Matrix initial(n, m);
 
 	//boundary
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < n; i++) {
 		initial[i][0] = 0;
-		initial[i][width - 1] = 0;
+		initial[i][m - 1] = 0;
 	}
 
 	//initial condition 
 	double x = dx;
-	for (int i = 1; i < width - 1; i++) {
+	for (int i = 1; i < m - 1; i++) {
 		if (x <= 50)initial[0][i] = 0;
 		else if (50 < x <= 110)initial[0][i] = 100 * sin(PI*((x - 50) / 60));
 		else if (110 < x <= xmax)initial[0][i] = 0;
@@ -97,6 +95,6 @@ Matrix Scheme::analitical() {
 			else if (110 + 250 / t < x <= xmax)analitical[i][j] = 0;
 		}
 	}
-
+	
 	return analitical;
 };
