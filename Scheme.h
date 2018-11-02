@@ -4,23 +4,25 @@
 #include <vector>;
 #include "matrix.h";
 
-
-class Scheme
-{
+class Scheme{
 	public:
 		Scheme();
-		Scheme(double dx,double dt,double u,double xmax,double tmax,int n ,int  m);
+		Scheme(double dx, double dt, double u, double xmax, double tmax);
 		double ErrorNorm1(Matrix analitical, Matrix approx);
 		double ErrorNorm2(Matrix analitical, Matrix approx);
 		double ErrorNormInf(Matrix analitical, Matrix approx);
-		Matrix analitical();
 		Matrix boundary();
-
+		Matrix analitical();
 
 	protected:
-		double dx, dt, u,xmax, tmax;
-		int n, m;
-		double C=u*dt/dx;
+		double dx;
+		double dt;
+		double u;
+		double xmax;
+		double tmax;
+		double C = u * dt / dx;
 };
 
 #endif
+
+
