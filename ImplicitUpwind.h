@@ -3,6 +3,6 @@
 
 class ImplicitUpwind :public Scheme {
 	public:
-		ImplicitUpwind(double deltaX, double deltaT, double u, double maxX, double maxT, int n, int m);
+		ImplicitUpwind(double dx, double dt, double u, double xmax, double tmax);
 		Matrix solve(Matrix solve);
 };
