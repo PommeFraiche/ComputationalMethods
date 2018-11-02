@@ -40,7 +40,7 @@ void printSolution(Matrix solution) {
 		for (int j = 0; j < m; j++) {
 			cout << solution[i][j] << "	";
 		}
-		cout << "/n";
+		cout << endl;
 		t += dt;
 	}
 }
