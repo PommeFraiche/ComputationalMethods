@@ -13,10 +13,10 @@ Matrix ImplicitUpwind::solve(Matrix solution) {
 
 	// The problem can be represented as the matrix equation A*X=B
 	//Declaration of matrix A values
-	A[0][0] = -C - 1;
+	A[0][0] = C + 1;
 	for (int i = 1; i < m; i++) {
 		for (int j = 0; j < m; j++) {
-			if (i == j) { A[i][j] = -C - 1; A[i][j - 1] = C; }
+			if (i == j) { A[i][j] = C + 1; A[i][j - 1] = -C; }
 			else  A[i][j] = 0;
 		}
 	}

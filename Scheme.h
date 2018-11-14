@@ -1,8 +1,9 @@
 #ifndef DEF_SCHEME
 #define DEF_SCHEME
 
-#include <vector>;
-#include "matrix.h";
+#include <vector>
+#include "matrix.h"
+#include <iomanip>
 
 class Scheme{
 	public:

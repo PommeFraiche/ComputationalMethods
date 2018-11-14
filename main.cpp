@@ -13,7 +13,9 @@ double dx = 5, dt = 0.02, xmax = 405, tmax = 0.5+dt, u = 250;
 Matrix boundary, solution, analitical;
 
 int main() {
-	/*
+	
+
+
 	ExplicitUpwind ExpUp(dx, dt, u, xmax, tmax);
 	boundary = ExpUp.boundary();
 	solution = ExpUp.solve(boundary);
@@ -25,9 +27,9 @@ int main() {
 	cout << "Err1: "<< ExpUp.ErrorNorm1(analitical, solution)<<endl;
 	cout << "Err2: " << ExpUp.ErrorNorm2(analitical, solution) << endl;
 	cout << "ErrInf: " << ExpUp.ErrorNormInf(analitical, solution) << endl;
-	*/
+	
 
-	/*
+	
 	ImplicitUpwind ImpUp(dx, dt, u, xmax, tmax);
 	boundary = ImpUp.boundary();
 	solution = ImpUp.solve(boundary);
@@ -39,7 +41,7 @@ int main() {
 	cout << "Err1: " << ImpUp.ErrorNorm1(analitical, solution) << endl;
 	cout << "Err2: " << ImpUp.ErrorNorm2(analitical, solution) << endl;
 	cout << "ErrInf: " << ImpUp.ErrorNormInf(analitical, solution) << endl;
-	*/
+	
 
 	
 	FTCS ftcs(dx, dt, u, xmax, tmax);
@@ -54,7 +56,7 @@ int main() {
 	cout << "Err2: " << ftcs.ErrorNorm2(analitical, solution) << endl;
 	cout << "ErrInf: " << ftcs.ErrorNormInf(analitical, solution) << endl;
 	
-/*
+
 	LaxWendroff Lax(dx, dt, u, xmax, tmax);
 	boundary = Lax.boundary();
 	solution = Lax.solve(boundary);
@@ -66,7 +68,8 @@ int main() {
 	cout << "Err1: " << Lax.ErrorNorm1(analitical, solution) << endl;
 	cout << "Err2: " << Lax.ErrorNorm2(analitical, solution) << endl;
 	cout << "ErrInf: " << Lax.ErrorNormInf(analitical, solution) << endl;
-	cin >> dt;
-*/
+
+	Lax.printSolution(analitical);
+	
 	return 0;
 }

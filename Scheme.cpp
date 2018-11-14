@@ -86,10 +86,10 @@ Matrix Scheme::analitical() {
 		t = i * dt;
 		double x = 0;
 		for (int j = 1; j < m - 1; j++) { 
-			x = i * dx;
-			if (0 <= x <= 50 + 250 * t)analitical[i][j] = 0;
-			else if (50 + 250 * t < x && x <= 110 + 250 * t)analitical[i][j] = 100 * sin(PI*(x - 50 - 250 * t) / 60);
-			else if (110 + 250 / t < x && x <= xmax)analitical[i][j] = 0;
+			x = j * dx;
+			if ( x <= (50 + 250 * t))analitical[i][j] = 0;
+			else if ((50 + 250 * t) < x && x < (110 + 250 * t))analitical[i][j] = 100 * sin(PI*(x - 50 - (250 * t)) / 60);
+			else if ((110 + 250 * t) <= x && x <= xmax)analitical[i][j] = 0;
 		}
 	}
 	
@@ -97,9 +97,11 @@ Matrix Scheme::analitical() {
 };
 
 void Scheme::printSolution(Matrix solution) {
+	
 	ofstream output;
-	output.open("ftcs.txt");
-	cout << "t'\'x ";
+	output.open("002.txt");
+	
+	cout << "t'\'x "<< "  ";
 	output << fixed << setprecision(4);
 	if (output.is_open()) {
 		output << left << setw(8) << setfill(' ') << " ";
@@ -107,6 +109,7 @@ void Scheme::printSolution(Matrix solution) {
 			cout << x << "	";
 			output << left << setw(10) << setfill(' ') << x;
 		}
+		cout << endl;
 		output << endl;
 		double t = 0;
 		for (int i = 0; i < n; i++) {
