@@ -19,12 +19,12 @@ Matrix FTCS::solve(Matrix solution) {
 		}
 	}
 	A[0][0] = A[m - 1][m - 1] = 1;
-	A[0][1] = -C / 2;
-	A[m - 1][m - 2] = C / 2;
+	A[0][1] = C / 2;
+	A[m - 1][m - 2] = -C / 2;
 	for (int k = 1; k < m - 1; k++) {
 		A[k][k] = 1; 
-		A[k][k - 1] = C / 2; 
-		A[k][k + 1] = -C / 2; 
+		A[k][k - 1] = -C / 2; 
+		A[k][k + 1] = C / 2; 
 	}
 
 	//Solve for each line of the matrix
@@ -45,7 +45,7 @@ Matrix FTCS::solve(Matrix solution) {
 		}
 
 		//Set the result in the matrix "solution" 
-		for (int k = 0; k < m; k++)solution[i + 1][k] = X[k];
+		for (int k = 0; k < m; k++) solution[i + 1][k] = X[k];
 	}
 
 	return solution;

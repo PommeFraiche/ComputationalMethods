@@ -9,7 +9,7 @@
 using namespace std;
 
 //Problem
-double dx = 5, dt = 0.1, xmax = 400, tmax = 0.5, u = 250;
+double dx = 5, dt = 0.02, xmax = 405, tmax = 0.5+dt, u = 250;
 Matrix boundary, solution, analitical;
 
 int main() {
@@ -41,7 +41,7 @@ int main() {
 	cout << "ErrInf: " << ImpUp.ErrorNormInf(analitical, solution) << endl;
 	*/
 
-	/*
+	
 	FTCS ftcs(dx, dt, u, xmax, tmax);
 	boundary = ftcs.boundary();
 	solution = ftcs.solve(boundary);
@@ -53,8 +53,8 @@ int main() {
 	cout << "Err1: " << ftcs.ErrorNorm1(analitical, solution) << endl;
 	cout << "Err2: " << ftcs.ErrorNorm2(analitical, solution) << endl;
 	cout << "ErrInf: " << ftcs.ErrorNormInf(analitical, solution) << endl;
-	*/
-
+	
+/*
 	LaxWendroff Lax(dx, dt, u, xmax, tmax);
 	boundary = Lax.boundary();
 	solution = Lax.solve(boundary);
@@ -67,6 +67,6 @@ int main() {
 	cout << "Err2: " << Lax.ErrorNorm2(analitical, solution) << endl;
 	cout << "ErrInf: " << Lax.ErrorNormInf(analitical, solution) << endl;
 	cin >> dt;
-
+*/
 	return 0;
 }
