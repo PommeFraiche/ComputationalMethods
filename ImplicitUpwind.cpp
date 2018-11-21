@@ -7,7 +7,7 @@ ImplicitUpwind::ImplicitUpwind(double dx, double dt, double u, double xmax, doub
 
 Matrix ImplicitUpwind::solve(Matrix solution) {
 	Matrix A(m, m);
-	vector<double> B(m), X(m);
+	vector<double> B(m), X(m), a(m);
 
 	double varThomas;
 
@@ -26,21 +26,21 @@ Matrix ImplicitUpwind::solve(Matrix solution) {
 
 		//Declaration of vector B values
 		for (int k = 0; k < m; k++)B[k] = solution[i][k];
-
+		for (int k = 0; k < m; k++)a[k] = A[k][k];
+		
 		//Thomas Algorithm 
 		for (int k = 1; k < m; k++) {
 			varThomas = A[k][k - 1] / A[k - 1][k - 1];
-			A[k][k] = A[k][k] - (varThomas*A[k - 1][k]);
+			a[k] = A[k][k] - (varThomas*A[k - 1][k]);
 			B[k] = B[k] - (varThomas*B[k - 1]);
 		}
-		X[m - 1] = B[m - 1] / A[m - 1][m - 1];
+		X[m - 1] = B[m - 1] / a[m - 1];
 		for (int k = m - 2; k >= 0; k--) {
-			X[k] = (B[k] - A[k][k + 1] * X[k + 1]) / A[k][k];
-
+			X[k] = (B[k] - A[k][k + 1] * X[k + 1]) / a[k];
 		}
 
 		//Set the result in the matrix "solution" 
-		for (int k = 0; k < m; k++)solution[i + 1][k] = X[k];
+		for (int k = 0; k < m; k++) solution[i + 1][k] = X[k];
 	}
 
 	return solution;
