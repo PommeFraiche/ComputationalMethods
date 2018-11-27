@@ -23,6 +23,7 @@ double Scheme::ErrorNorm1(Matrix analitical, Matrix approx) {
 	double error = 0;
 	for (int i = 0; i < k; i++) {
 		for (int j = 0; j < l; j++) {
+			//norm1 calcul
 			error += abs(analitical[i][j] - approx[i][j]);
 		}
 	}
@@ -35,6 +36,7 @@ double Scheme::ErrorNorm2(Matrix analitical, Matrix approx) {
 	double error = 0;
 	for (int i = 0; i < k; i++) {
 		for (int j = 0; j < l; j++) {
+			//norm2 calcul
 			error += (analitical[i][j] - approx[i][j])*(analitical[i][j] - approx[i][j]);
 		}
 	} 
@@ -48,6 +50,7 @@ double Scheme::ErrorNormInf(Matrix analitical, Matrix approx) {
 	double error = 0;
 	for (int i = 0; i < k; i++) {
 		for (int j = 0; j < l; j++) {
+			//determinate the maximun diference
 			if (abs(analitical[i][j] - approx[i][j]) > error) {
 				error = abs(analitical[i][j] - approx[i][j]);
 			}
@@ -87,6 +90,7 @@ Matrix Scheme::analitical() {
 		double x = 0;
 		for (int j = 1; j < m - 1; j++) { 
 			x = j * dx;
+			//analytical formul
 			if ( x <= (50 + 250 * t))analitical[i][j] = 0;
 			else if ((50 + 250 * t) < x && x < (110 + 250 * t))analitical[i][j] = 100 * sin(PI*(x - 50 - (250 * t)) / 60);
 			else if ((110 + 250 * t) <= x && x <= xmax)analitical[i][j] = 0;
@@ -99,7 +103,7 @@ Matrix Scheme::analitical() {
 void Scheme::printSolution(Matrix solution) {
 	
 	ofstream output;
-	output.open("002.txt");
+	output.open("Result.txt");
 	
 	cout << "t'\'x "<< "  ";
 	output << fixed << setprecision(4);

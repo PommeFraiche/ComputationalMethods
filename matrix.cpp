@@ -27,20 +27,6 @@ int Matrix::getNcols() const
 }
 
 
-// INPUT AND OUTPUT FUNCTIONS
-void insertValue(double& value, Matrix& m, int n , int x) {
-	m[n][x] = value;
-}
-
-std::ifstream& operator>>(std::ifstream& ifs, Matrix& m) {
-	int nrows, ncols;
-    ifs >> nrows; ifs>> ncols;
-    if(nrows < 0 || ncols < 0) throw std::invalid_argument("file read error - negative matrix size");
-    m = Matrix(nrows, ncols);
-    for (int i=0; i<nrows; i++) 
-		for (int j=0; j<ncols; j++) ifs >> m[i][j];
-    return ifs;
-}
 
 
 

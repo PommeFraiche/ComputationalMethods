@@ -26,8 +26,9 @@ Matrix ImplicitUpwind::solve(Matrix solution) {
 
 		//Declaration of vector B values
 		for (int k = 0; k < m; k++)B[k] = solution[i][k];
+		//Declaration of the temporary vector a of Thomas Algorithm 
 		for (int k = 0; k < m; k++)a[k] = A[k][k];
-		
+
 		//Thomas Algorithm 
 		for (int k = 1; k < m; k++) {
 			varThomas = A[k][k - 1] / A[k - 1][k - 1];
@@ -37,10 +38,11 @@ Matrix ImplicitUpwind::solve(Matrix solution) {
 		X[m - 1] = B[m - 1] / a[m - 1];
 		for (int k = m - 2; k >= 0; k--) {
 			X[k] = (B[k] - A[k][k + 1] * X[k + 1]) / a[k];
+
 		}
 
 		//Set the result in the matrix "solution" 
-		for (int k = 0; k < m; k++) solution[i + 1][k] = X[k];
+		for (int k = 0; k < m; k++)solution[i + 1][k] = X[k];
 	}
 
 	return solution;
